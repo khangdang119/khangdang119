@@ -1,0 +1,7 @@
+Dim message, sapi
+
+message = InputBox("A Free Pronunciation tool"+vbcrlf,"Text to Audio converter")
+
+Set sapi = CreateObject("sapi.spvoice")
+
+sapi.Speak message

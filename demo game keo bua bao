@@ -1,48 +1,48 @@
 #include <stdio.h>
+#include<stdlib.h>
 #include<time.h>
 int main(){
     int i,rd;
-    printf("Chu thich \n1:keo  2:bua  3:bao");
-    printf("\nnhap tuong ung: \nA:Keo\nB:Bua\nC:Bao\n");
+    printf("********Chu thich******** \n1:Keo  2:Bua  3:Bao");
+    printf("\nChon tuong ung: \nA:Keo\nB:Bua\nC:Bao\n");
+    printf("\nBan chon:");
     srand(time(NULL));
     for(i=0;i<3;i++){
     rd=1+rand()%3;}
     char chon;
     chon=getchar();
     switch(chon){
-        case 'A':
-        case 'a':{
+        case 'A':{
         if(rd==1){
-            printf("May:%10d",rd);
+            printf("May:%d",rd);
             printf("\nhoa");}
         else if(rd==2){
-            printf("May:%10d",rd);
+            printf("May:%d",rd);
             printf("\nThua");}
         else {
-            printf("May:%10d",rd);
+            printf("May:%d",rd);
             printf("\nthang");}
         break;}
-        case 'B':
-        case 'b':{
-        if(rd==1){printf("May:%10d",rd);
+        case 'B':{
+        if(rd==1){printf("May:%d",rd);
             printf("\nthang");}
-        else if(rd==2){printf("May:%10d",rd);
+        else if(rd==2){printf("May:%d",rd);
             printf("\nhoa");}
             else {
-                printf("May:%10d",rd);
+                printf("May:%d",rd);
                 printf("\nthua");}
         break;}
-        case 'C':
-        case 'c':{
-            if(rd==1){printf("May:%10d",rd);
+        case 'C':{
+            if(rd==1){printf("May:%d",rd);
                 printf("\nthua");}
-            else if(rd==2){printf("May:%10d",rd);
+            else if(rd==2){printf("May:%d",rd);
                 printf("\nthang");}
             else {
-                printf("May:%10d",rd);
+                printf("May:%d",rd);
                 printf("\nhoa");}
         break;}
         default: printf("\nnhap lai");
         break;}
     return 0;}
+    
 

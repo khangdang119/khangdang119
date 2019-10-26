@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h >
+#include"console.h"
+void TextColor (int color)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE) , color);
+}
+int main(){
+	TextColor(10);
+	char arr[100]="\n			     *    HAPPY BIRHTDAY   *";
+	int dong=0;
+	while(1){
+		system("cls");
+		int i;
+	for(i=0;i<dong;i++)
+	printf("\n");
+	printf("\a");
+	printf("\n				* * *       * * *");
+	printf("\n 			      *         *         *");
+	printf("				  %s",arr);
+	printf("\n\n			      *  Phan Thi Truc Ly *");
+	printf("\n\n				*               *");
+	printf("\n\n				   *         *");
+	printf("\n					*");
+	printf("\n					|");
+	printf("\n			 _________________________________");
+	printf("\n		        |			          |");
+	printf("\n                        |     Chuc mung sinh nhat me!     |");
+	printf("\n			|             27/10               |");
+	printf("\n	            ___________________________________________");
+	printf("\n		   |				               |");	
+	printf("\n		   |				               |");
+	printf("\n		   |				               |");
+	printf("\n________________________________________________________________________________");
+	dong++;
+	sleep(1);	
+}
+	return 0;
+}

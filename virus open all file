@@ -1,3 +1,4 @@
+//save '.bat'
 @echo off
 :A
 start calc

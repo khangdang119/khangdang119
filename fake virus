@@ -1,0 +1,8 @@
+X=Msgbox("Virus",3+16,"Warning !")
+X=Msgbox("Run Cleaner ?",3+48,"Notification")
+X=Msgbox("Found, tick 'yes' to repair",4+64,"Computer")
+X=Msgbox("Fail",1+16,"Warning")
+X=Msgbox("Retry ?",2+48,"Computer ")
+X=Msgbox("Virus has been activated",1+16,"Warning")
+X=Msgbox("C hardisk has been upload and deleted",1+16,"Warning")
+X=Msgbox("May da bi hack",1+16,"Hacker")

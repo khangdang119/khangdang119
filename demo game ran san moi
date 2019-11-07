@@ -1,0 +1,119 @@
+#include<stdio.h>
+#include"console.h"
+#include<Windows.h>
+#include<conio.h>
+#include<string.h>
+void clrscr()
+{
+	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;                  
+	HANDLE	hConsoleOut;
+	COORD	Home = {0,0};
+	DWORD	dummy;
+
+	hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(hConsoleOut,&csbiInfo);
+
+	FillConsoleOutputCharacter(hConsoleOut,' ',csbiInfo.dwSize.X * csbiInfo.dwSize.Y,Home,&dummy);
+	csbiInfo.dwCursorPosition.X = 0;
+	csbiInfo.dwCursorPosition.Y = 0;
+	SetConsoleCursorPosition(hConsoleOut,csbiInfo.dwCursorPosition);
+}
+
+
+//screen: goto [x,y]
+void gotoXY (int column, int line)
+{
+	COORD coord;
+	coord.X = column;
+	coord.Y = line;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+
+
+//screen: get [x]
+int whereX()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	if(GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+		return csbi.dwCursorPosition.X;
+	return -1;
+}
+
+
+//screen: get [y]
+int whereY()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	if(GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+		return csbi.dwCursorPosition.Y;
+	return -1;
+}
+
+
+void TextColor (int color)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE) , color);
+}
+enum ViTri{LEFT,RIGHT,UP,DOWN};
+struct ToaDo{
+	int x,y;
+};
+struct VatPham{
+	struct ToaDo td;
+};
+struct K{
+    struct ToaDo d[51];		
+	int n;
+	enum ViTri vt;
+};
+int main(){				//Khoi tao
+	struct K K;
+	struct VatPham vp;
+	K.n=3;
+	K.d[0].x=2;
+	K.d[0].y=0;
+	K.d[1].x=1;
+	K.d[1].y=0;
+	K.d[2].x=0;
+	K.d[2].y=0;
+	K.vt=RIGHT;
+	vp.td.x=9;
+	vp.td.y=9;
+	while(1){
+	clrscr();
+	int i,j;
+	gotoXY(vp.td.x,vp.td.y);
+	printf("$");
+	for(i=0;i<K.n;i++){
+		gotoXY(K.d[i].x,K.d[i].y);
+		TextColor(14);
+		printf("@");
+		TextColor(11);	
+	}	
+	for(j=K.n-1;i>0;i--)	//di chuyen
+	K.d[i]=K.d[i-1];
+	if(kbhit()){
+	char key=getch();
+	if(key=='A'||key=='a')
+	K.vt=LEFT;
+	else if(key=='D'||key=='d')
+	K.vt=RIGHT;
+	else if(key=='W'||key=='w')
+	K.vt=UP;
+	else if(key=='S'||key=='s')
+	K.vt=DOWN;
+	}
+	if(K.vt==LEFT)
+	K.d[0].x--;
+	else if(K.vt==RIGHT)
+	K.d[0].x++;
+	else if(K.vt==UP)
+	K.d[0].y--;
+	else if(K.vt==DOWN)
+	K.d[0].y++;
+	
+	
+	Sleep(100);	
+	}
+	
+}

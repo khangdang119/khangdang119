@@ -1,8 +1,11 @@
 #include<stdio.h>
-#include"console.h"
+#include<string.h>
+#include<time.h>
 #include<Windows.h>
 #include<conio.h>
-#include<string.h>
+#include"console.h"
+#define W 40
+#define H 25
 void clrscr()
 {
 	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;                  
@@ -66,10 +69,11 @@ struct K{
 	int n;
 	enum ViTri vt;
 };
-int main(){				//Khoi tao
+int main(){	
+srand(time(NULL))	;		
 	struct K K;
 	struct VatPham vp;
-	K.n=3;
+	K.n=3;					//khai bao dot
 	K.d[0].x=2;
 	K.d[0].y=0;
 	K.d[1].x=1;
@@ -77,20 +81,24 @@ int main(){				//Khoi tao
 	K.d[2].x=0;
 	K.d[2].y=0;
 	K.vt=RIGHT;
-	vp.td.x=9;
+	vp.td.x=9;			//Vi tri vat pham
 	vp.td.y=9;
 	while(1){
 	clrscr();
-	int i,j;
-	gotoXY(vp.td.x,vp.td.y);
+	int i;
+	for(i=0;i<H;i++){			//xu li bien
+		gotoXY(W,i);
+		putchar(179);
+	}
+	gotoXY(vp.td.x,vp.td.y);		//xuat ra vat pham
 	printf("$");
-	for(i=0;i<K.n;i++){
+	for(i=0;i<K.n;i++){				//xuat ra snake
 		gotoXY(K.d[i].x,K.d[i].y);
-		TextColor(14);
+		TextColor(12);
 		printf("@");
 		TextColor(11);	
 	}	
-	for(j=K.n-1;i>0;i--)	//di chuyen
+	for(i=K.n-1;i>0;i--)	//di chuyen
 	K.d[i]=K.d[i-1];
 	if(kbhit()){
 	char key=getch();
@@ -111,9 +119,29 @@ int main(){				//Khoi tao
 	K.d[0].y--;
 	else if(K.vt==DOWN)
 	K.d[0].y++;
-	
-	
-	Sleep(100);	
+	if(K.d[0].x==vp.td.x&&K.d[0].y==vp.td.y){	//xu li an vat pham
+		for(i=K.n;i>0;i--)
+		K.d[i]=K.d[i-1];
+		K.n++;
+	if(K.vt==LEFT)
+	K.d[0].x--;
+	else if(K.vt==RIGHT)
+	K.d[0].x++;
+	else if(K.vt==UP)
+	K.d[0].y--;
+	else if(K.vt==DOWN)
+	K.d[0].y++;
+	vp.td.x=rand()%W;		//random vat pham
+	vp.td.y=rand()%H;	
+}
+	for(i=1;i<K.n;i++)
+	if(K.d[0].x<0||K.d[0].x>=W||K.d[0].y<0||K.d[0].y>=H||((K.d[0].x==K.d[i].x)&&(K.d[0].y==K.d[i].y))){	//xu li thua
+	gotoXY(W+11,19);
+	printf("THUA");
+	while(getch()!=13)		//ma Enter
+	break;
+	}
+	Sleep(90);	
 	}
 	
 }

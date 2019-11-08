@@ -65,12 +65,12 @@ struct VatPham{
 	struct ToaDo td;
 };
 struct K{
-    struct ToaDo d[51];		
+    struct ToaDo d[119];		
 	int n;
 	enum ViTri vt;
 };
 int main(){	
-srand(time(NULL))	;		
+srand(time(NULL));		
 	struct K K;
 	struct VatPham vp;
 	K.n=3;					//khai bao dot
@@ -81,16 +81,17 @@ srand(time(NULL))	;
 	K.d[2].x=0;
 	K.d[2].y=0;
 	K.vt=RIGHT;
-	vp.td.x=9;			//Vi tri vat pham
-	vp.td.y=9;
+	vp.td.x=rand()%W;			//Vi tri vat pham
+	vp.td.y=rand()%H;
 	while(1){
 	clrscr();
 	int i;
 	for(i=0;i<H;i++){			//xu li bien
 		gotoXY(W,i);
-		putchar(179);
+		putchar(3);		
 	}
-	gotoXY(vp.td.x,vp.td.y);		//xuat ra vat pham
+	gotoXY(vp.td.x,vp.td.y);
+	TextColor(14);		//xuat ra vat pham
 	printf("$");
 	for(i=0;i<K.n;i++){				//xuat ra snake
 		gotoXY(K.d[i].x,K.d[i].y);
@@ -132,16 +133,16 @@ srand(time(NULL))	;
 	else if(K.vt==DOWN)
 	K.d[0].y++;
 	vp.td.x=rand()%W;		//random vat pham
-	vp.td.y=rand()%H;	
+	vp.td.y=rand()%H;
 }
 	for(i=1;i<K.n;i++)
 	if(K.d[0].x<0||K.d[0].x>=W||K.d[0].y<0||K.d[0].y>=H||((K.d[0].x==K.d[i].x)&&(K.d[0].y==K.d[i].y))){	//xu li thua
 	gotoXY(W+11,19);
 	printf("THUA");
 	while(getch()!=13)		//ma Enter
-	break;
-	}
-	Sleep(90);	
+	break;	
+}
+	Sleep(119);	
 	}
 	
 }

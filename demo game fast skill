@@ -1,0 +1,166 @@
+#include<stdio.h>
+#include<string.h>
+#include<time.h>
+#include<Windows.h>
+#include<conio.h>
+#include<stdlib.h>
+void clrscr()
+{
+	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;                  
+	HANDLE	hConsoleOut;
+	COORD	Home = {0,0};
+	DWORD	dummy;
+
+	hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(hConsoleOut,&csbiInfo);
+
+	FillConsoleOutputCharacter(hConsoleOut,' ',csbiInfo.dwSize.X * csbiInfo.dwSize.Y,Home,&dummy);
+	csbiInfo.dwCursorPosition.X = 0;
+	csbiInfo.dwCursorPosition.Y = 0;
+	SetConsoleCursorPosition(hConsoleOut,csbiInfo.dwCursorPosition);
+}
+
+
+//screen: goto [x,y]
+void gotoXY (int column, int line)
+{
+	COORD coord;
+	coord.X = column;
+	coord.Y = line;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
+}
+
+
+//screen: get [x]
+int whereX()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	if(GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+		return csbi.dwCursorPosition.X;
+	return -1;
+}
+
+
+//screen: get [y]
+int whereY()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	if(GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+		return csbi.dwCursorPosition.Y;
+	return -1;
+}
+
+
+void TextColor (int color)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE) , color);
+}
+enum ViTri{LEFT,RIGHT};
+enum ViChi{UP,DOWN};
+enum DiChi{UPK,DOWNK};
+enum DiTri{UPH,DOWNH};
+struct K{
+	int x,y,z,t,u,v,w,q;
+	char arr[11];
+	char ar[11];
+	char a[11];
+	char b[11];
+	enum ViTri vt;
+	enum ViChi vc;
+	enum DiChi dc;
+	enum DiTri dt;
+};
+int main(){
+	srand(time(NULL));
+	struct K K;
+	strcpy(K.arr,"^");
+	strcpy(K.ar,"#");
+	strcpy(K.a,"#");
+	strcpy(K.b,"#");
+	K.x=0;
+	K.y=50;
+	K.z=10;
+	K.t=rand()%49;
+	K.u=20;
+	K.v=rand()%49;
+	K.w=30;
+	K.q=rand()%49;
+	K.vt=RIGHT;
+	K.vc=DOWN;
+	K.dc=DOWNK;
+	K.dt=DOWNH;
+	while(1){
+		int i;
+		clrscr();
+		for(i=0;i<=50;i++){
+		gotoXY(70,i);
+		TextColor(12);
+		putchar(3);
+	}
+		gotoXY(K.x,K.y);
+		TextColor(10);
+		printf("%s",K.arr);
+			gotoXY(K.z,K.t);
+			TextColor(13);
+			printf("%s",K.ar);
+				gotoXY(K.u,K.v);
+				TextColor(14);
+				printf("%s",K.a);
+					gotoXY(K.w,K.q);
+					TextColor(15);
+					printf("%s",K.b);
+		if(kbhit()){
+			char key=getch();
+				if(key=='A'||key=='a')		
+				K.vt=LEFT;
+				else if(key=='D'||key=='d')
+				K.vt=RIGHT;
+			}	
+				if(K.t<=0)
+				K.vc=DOWN;
+				else if(K.t>=50)
+				K.vc=UP;
+				if(K.v<=0)
+				K.dc=DOWNK;
+				else if(K.v>=50)
+				K.dc=UPK;
+				if(K.q<=0)
+				K.dt=DOWNH;
+				else if(K.q>=50)
+				K.dt=UPH;
+					if(K.vt==LEFT)
+					K.x--;
+					else if(K.vt==RIGHT)
+					K.x++;
+					if(K.vc==UP)
+					K.t--;
+					else if(K.vc==DOWN)
+					K.t++;
+					if(K.dc==UPK)
+					K.v--;
+					else if(K.dc==DOWNK)
+					K.v++;
+					if(K.dt==UPH)
+					K.q--;
+					else if(K.dt==DOWNH)
+					K.q++;
+						if(K.x<=0||K.x>=70){
+						gotoXY(90,30);
+						TextColor(11);
+						printf("THUA");
+						while(getch()!=13)
+						break;
+					}
+							if((K.x==K.z&&K.y==K.t)||(K.x==K.u&&K.y==K.v)||(K.x==K.w&&K.y==K.q)){
+							gotoXY(90,32);
+							TextColor(11);
+							printf("THANG");
+							gotoXY(90,33);
+							printf("Press any key");
+							while(getch()!=13)
+							break;
+						}
+						Sleep(29);
+		}
+		return 0;
+	}

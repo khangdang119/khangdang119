@@ -6,5 +6,5 @@ X=Msgbox("Retry ?",2+48,"Computer ")
 X=Msgbox("Virus has been activated",1+16,"Warning")
 X=Msgbox("C hardisk has been upload and deleted",1+16,"Warning")
 do
-X=Msgbox("May da bi hack",1+16,"Hacker")
+X=Msgbox("Your computer has been hacked",1+16,"Hacker")
 loop

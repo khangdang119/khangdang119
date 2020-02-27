@@ -1,0 +1,23 @@
+int check(long long n){
+	long long doan;
+	int i,count=0;
+	doan=n;
+	while(doan>=2){
+		if(doan%2==0)
+			doan=doan/2;
+		else
+			doan=(doan+1)/2;
+		count++;
+	}	
+	while(doan!=1){
+		if(doan>1){
+			doan--;
+			count++;
+		}
+		else if(doan<1){
+			doan++;
+			count++;
+		}
+	}
+	return count;
+}

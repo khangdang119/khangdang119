@@ -1,47 +1,9 @@
-std::vector<int> sortArray(std::vector<int> a)
-{
-    int brr[100],crr[100],i,j=0,k,count=0;
-    for(i=0;i<a.size();i++){    //so duong
-        if(a[i]>0){
-			brr[j++]=a[i];
-			count++;
-		}
+int i,j,div,max=0;
+    for(i=0;i<a.size();i++){
+        for(j=0;j<a.size();j++){
+            div=a[i]/a[j];
+            if(max<div)
+                max=div;
+        }
     }
-    for(i=0;i<count;i++){
-		for(j=count-1;j>i;j--){
-			if(brr[j]<brr[j-1]){
-				int tt=brr[j-1];
-				brr[j-1]=brr[j];
-				brr[j]=tt;
-			}
-		}
-	}
-    j=0,count=0;
-    for(i=0;i<a.size();i++){       //so am
-		if(a[i]<0){
-			crr[j++]=a[i];
-			count++;
-		}
-	}
-	for(i=0;i<count;i++){
-		for(j=count-1;j>i;j--){
-			if(crr[j]>crr[j-1]){
-				int tt=crr[j-1];
-				crr[j-1]=crr[j];
-				crr[j]=tt;
-			}
-		}
-	}
-    j=0,k=0;
-    for(i=0;i<a.size();i++){		//tra ve mang a
-		if(a[i]==0)
-			continue;
-		else if(a[i]>0){
-			a[i]=brr[j++];
-		}
-		else if(a[i]<0){
-			a[i]=crr[k++];
-		}
-	}
-    return a;
-}
+    return max;

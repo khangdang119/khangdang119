@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<time.h>
+#include<string.h>
 void khoitao(int a[][5],int b[][5]){			//Tao map khoi dau va sinh min ngau nhien
 	srand(time(NULL));
 	int i,j,b1,b2,b3,b4,b5,b6;
@@ -103,6 +104,10 @@ void printmap2(int a[][5],int b[][5]){		//in map sau moi lan mo o
 		}
 		printf("\n");
 	}
+}
+char update(char *s){
+	*s="edit by khang";
+	puts(*s);
 }
 int _count(int a[][5]){				//dem so o con lai
 	int i,j,count=0;
@@ -240,6 +245,8 @@ int _open3(int a[][5],int b[][5],int h,int c){			// mo o theo cach 3
 //}
 int main(){
 	int a[5][5], b[5][5],h ,c,bom=3,lc;
+	char *s;
+	update(&s);
 	khoitao(a,b);
 	countmin(b);
 	while(1){					

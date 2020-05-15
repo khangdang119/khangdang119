@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<time.h>
-#include<string.h>
 void khoitao(int a[][5],int b[][5]){			//Tao map khoi dau va sinh min ngau nhien
 	srand(time(NULL));
 	int i,j,b1,b2,b3,b4,b5,b6;

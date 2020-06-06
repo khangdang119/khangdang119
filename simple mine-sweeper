@@ -1,7 +1,11 @@
 #include<stdio.h>
 #include<time.h>
 #include<windows.h>
-void khoitao(int a[][5],int b[][5],int min){			//Tao map khoi dau va sinh min ngau nhien
+#define M 5
+#define N 5
+int b[M][N];
+int a[M][N];
+void khoitao(int min){			//Tao map khoi dau va sinh min ngau nhien
 	int i,j,b1,b2,count=0;
 	for(i=0;i<5;i++){
 		for(j=0;j<5;j++){
@@ -19,7 +23,7 @@ void khoitao(int a[][5],int b[][5],int min){			//Tao map khoi dau va sinh min ng
 		}
 	}
 }
-void countmin(int b[][5]){				//Dem min xung quanh o
+void countmin(){				//Dem min xung quanh o
 	int i,j,count=0;
 	for(i=0;i<5;i++){
 		for(j=0;j<5;j++){
@@ -62,7 +66,7 @@ void countmin(int b[][5]){				//Dem min xung quanh o
 		}
 	}
 }
-void printmap1(int b[][5]){			//in map thua
+void printmap1(){			//in map thua
 	int i,j,k;
 	printf("  ");
 	for(k=0;k<5;k++)
@@ -81,7 +85,7 @@ void printmap1(int b[][5]){			//in map thua
 		printf("\n");
 	}
 }
-void printmap2(int a[][5],int b[][5]){		//in map sau moi lan mo o
+void printmap2(){		//in map sau moi lan mo o
 	int i,j,k;
 	printf("  ");
 	for(k=0;k<5;k++)
@@ -104,7 +108,7 @@ void printmap2(int a[][5],int b[][5]){		//in map sau moi lan mo o
 		printf("\n");
 	}
 }
-int _count(int a[][5]){				//dem so o con lai
+int _count(){				//dem so o con lai
 	int i,j,count=0;
 	for(i=0;i<5;i++){
 		for(j=0;j<5;j++){
@@ -114,11 +118,11 @@ int _count(int a[][5]){				//dem so o con lai
 	}
 	return count;
 }
-void _open1(int a[][5],int h, int c){			// mo o theo cach 1
+void _open1(int h, int c){			// mo o theo cach 1
 	if(a[h][c]==0)
 		a[h][c]=1;
 }
-int _open2(int a[][5],int b[][5],int h, int c){		// mo o theo cach 2
+int _open2(int h, int c){		// mo o theo cach 2
 	a[h][c]=1;	
 	if(h<0||h>=5||c<0||c>=5)
 		return 0;
@@ -165,7 +169,7 @@ int _open2(int a[][5],int b[][5],int h, int c){		// mo o theo cach 2
 		}
 	}
 }
-int _open3(int a[][5],int b[][5],int h,int c){			// mo o theo cach 3
+int _open3(int h,int c){			// mo o theo cach 3
 	a[h][c]=1;	
 	if(h<0||h>=5||c<0||c>=5)
 		return 0;
@@ -173,76 +177,76 @@ int _open3(int a[][5],int b[][5],int h,int c){			// mo o theo cach 3
 		if(a[h+1][c]==0){
 			if(h+1>=0 && h+1<=4 && c>=0&& c<=4){
 				a[h+1][c]=1;
-				_open3(a,b,h+1,c);
+				_open3(h+1,c);
 			}
 		}
 		if(a[h+1][c+1]==0){
 			if(h+1>=0 && h+1<=4 && c+1>=0 && c+1<=4){
 				a[h+1][c+1]=1;
-				_open3(a,b,h+1,c+1);
+				_open3(h+1,c+1);
 			}
 		}
 		if(a[h][c+1]==0){
 			if(h>=0 && h<= 4 && c+1>=0 && c+1<=4){
 				a[h][c+1]=1;
-				_open3(a,b,h,c+1);
+				_open3(h,c+1);
 			}
 		}
 		if(a[h-1][c+1]==0){
 			if(h-1>=0 && h-1<=4 && c+1>=0 && c+1<=4){
 				a[h-1][c+1]=1;
-				_open3(a,b,h-1,c+1);
+				_open3(h-1,c+1);
 			}
 		}
 		if(a[h-1][c]==0){
 			if(h-1>=0 && h-1<=4 && c>=0 && c<=4){
 				a[h-1][c]=1;
-				_open3(a,b,h-1,c);
+				_open3(h-1,c);
 			}
 		}
 		if(a[h-1][c-1]==0){
 			if(h-1>= 0 && h-1<=4 && c-1>=0 && c-1<=4){
 				a[h-1][c-1]=1;
-				_open3(a,b,h-1,c-1);
+				_open3(h-1,c-1);
 			}
 		}
 		if(a[h][c-1]==0){
 			if(h>=0 && h<=4 && c-1>=0 && c-1<=4){
 				a[h][c-1]=1;
-				_open3(a,b,h,c-1);
+				_open3(h,c-1);
 			}
 		}
 		if(a[h+1][c-1]==0){
 			if(h+1>=0 && h+1<=4 && c-1>=0 && c-1<=4){
 				a[h+1][c-1]=1;
-				_open3(a,b,h+1,c-1);
+				_open3(h+1,c-1);
 			}
 		}
 	}
 }
 int main(){
-	int a[5][5], b[5][5],h ,c,min;
+	int h ,c,min;
 	printf("Nhap so min: ");
 	scanf("%d",&min);
-	khoitao(a,b,min);
-	countmin(b);
+	khoitao(min);
+	countmin();
 	while(1){
 		system("cls");					
-		printmap2(a,b);
+		printmap2();
 		printf("Nhap o");
 		scanf("%d%d",&h,&c);
 		if(b[h][c]==-1){
 			system("cls");
-			printmap1(b);
+			printmap1();
 			printf("\nThua");
 			break;
 		}
-		//_open1(a,h,c);
-		//_open2(a,b,h,c);
-		_open3(a,b,h,c);
-		if(_count(a)==min){
+		//_open1(h,c);
+		//_open2(h,c);
+		_open3(h,c);
+		if(_count()==min){
 			system("cls");
-			printmap2(a,b);
+			printmap2();
 			printf("\nThang");
 			break;
 		}

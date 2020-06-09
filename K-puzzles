@@ -3,8 +3,6 @@
 #include<Windows.h>
 #define MAX_M 100
 #define MAX_N 100
-int m, n, r, c;
-int A[100][100];
 typedef struct {
 	int m, n;
 	int A[MAX_M][MAX_N];
@@ -26,20 +24,25 @@ void init_state(State *S, char *s){
 void print_state(State S){
 	int i,j;
 	for(i=0;i<S.m;i++){
-		printf("+--+--+--+--+\n");
+		printf("+----+----+----+----+\n");
 		for(j=0;j<S.n;j++){
 			if(S.A[i][j]!=S.m*S.n){
 				if(j==0)
-					printf("|");
-				printf("%2d|",S.A[i][j]);
+					printf("|%2d  |",S.A[i][j]);
+				else
+					printf("%2d  |",S.A[i][j]);
 				
 			}
-			else
-				printf("..|");
+			else{
+				if(j==0)
+					printf("|..  |");
+				else
+					printf("..  |");
+			}
 		}
 		printf("\n");
 	}
-	printf("+--+--+--+--+\n");
+	printf("+----+----+----+----+\n");
 }
 int up(State S, State *N){
 	int i,j;
@@ -53,9 +56,9 @@ int up(State S, State *N){
 		}
 		N->r=S.r;
 		N->c=S.c;
-		N->A[5][5]=N->A[N->r][N->c];
+		N->A[100][100]=N->A[N->r][N->c];
 		N->A[N->r][N->c]=N->A[N->r-1][N->c];
-		N->A[N->r-1][N->c]=N->A[5][5];
+		N->A[N->r-1][N->c]=N->A[100][100];
 		N->r--;
 		return 1;		
 	}
@@ -73,9 +76,9 @@ int down(State S, State *N){
 		}
 		N->r=S.r;
 		N->c=S.c;
-		N->A[5][5]=N->A[N->r][N->c];
+		N->A[100][100]=N->A[N->r][N->c];
 		N->A[N->r][N->c]=N->A[N->r+1][N->c];
-		N->A[N->r+1][N->c]=N->A[5][5];
+		N->A[N->r+1][N->c]=N->A[100][100];
 		N->r++;
 		return 1;		
 	}
@@ -93,9 +96,9 @@ int left(State S, State *N){
 		}
 		N->r=S.r;
 		N->c=S.c;
-		N->A[5][5]=N->A[N->r][N->c];
+		N->A[100][100]=N->A[N->r][N->c];
 		N->A[N->r][N->c]=N->A[N->r][N->c-1];
-		N->A[N->r][N->c-1]=N->A[5][5];
+		N->A[N->r][N->c-1]=N->A[100][100];
 		N->c--;
 		return 1;		
 	}
@@ -113,9 +116,9 @@ int right(State S, State *N){
 		}
 		N->r=S.r;
 		N->c=S.c;
-		N->A[5][5]=N->A[N->r][N->c];
+		N->A[100][100]=N->A[N->r][N->c];
 		N->A[N->r][N->c]=N->A[N->r][N->c+1];
-		N->A[N->r][N->c+1]=N->A[5][5];
+		N->A[N->r][N->c+1]=N->A[100][100];
 		N->c++;
 		return 1;		
 	}

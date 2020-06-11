@@ -1,8 +1,11 @@
 #include<stdio.h>
 #include<string.h>
-#include<Windows.h>
+#include<windows.h>
 #define MAX_M 100
 #define MAX_N 100
+void TextColor (int color){
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE) , color);
+}
 typedef struct {
 	int m, n;
 	int A[MAX_M][MAX_N];
@@ -12,7 +15,7 @@ void init_state(State *S, char *s){
 	int i,j;
 	FILE *f;
 	f=fopen(s,"r");
-	fscanf(f,"%d%d",&S->m,&S->n);
+	fscanf(f,"%d%d\n",&S->m,&S->n);
 	for(i=0;i<S->m;i++){
 		for(j=0;j<S->n;j++){
 			fscanf(f,"%d",&S->A[i][j]);
@@ -27,17 +30,34 @@ void print_state(State S){
 		printf("+----+----+----+----+\n");
 		for(j=0;j<S.n;j++){
 			if(S.A[i][j]!=S.m*S.n){
-				if(j==0)
-					printf("|%2d  |",S.A[i][j]);
-				else
-					printf("%2d  |",S.A[i][j]);
-				
+				if(j==0){
+					printf("|");
+					TextColor(14);
+					printf("%2d",S.A[i][j]);
+					TextColor(15);
+					printf("  |");
+				}
+				else{
+					TextColor(14);
+					printf("%2d",S.A[i][j]);
+					TextColor(15);
+					printf("  |");
+				}
 			}
 			else{
-				if(j==0)
-					printf("|..  |");
-				else
-					printf("..  |");
+				if(j==0){
+					printf("|");
+					TextColor(11);
+					printf("..");
+					TextColor(15);
+					printf("  |");
+				}
+				else{
+					TextColor(11);
+					printf("..");
+					TextColor(15);
+					printf("  |");
+				}
 			}
 		}
 		printf("\n");
@@ -134,8 +154,8 @@ int is_finished(State S){
 }
 int main() {
     State S, N;
-    init_state(&S,"file1.txt");
-    while (is_finished(S)!=1){
+    init_state(&S,"k-puzzle.txt");
+	while (is_finished(S)!=1){
     	system("cls");
 		print_state(S);
     	char str[10];

@@ -1,0 +1,98 @@
+#include<stdio.h>
+#define Max 300
+typedef struct{
+	int Elements[Max];
+	int Front, Rear;
+}Queue;
+void makenullQueue(Queue *pQ){
+	pQ->Front=-1;
+	pQ->Rear=-1;
+}
+void deQueue(Queue *pQ){				//xoa 
+	pQ->Front=pQ->Front+1;
+	if (pQ->Front>pQ->Rear)
+		makenullQueue(pQ); 
+}
+void enQueue(int x, Queue *pQ){
+	int i;
+	if(pQ->Rear==Max-1){
+		for(i=pQ->Front;i<pQ->Rear;i++)
+			pQ->Elements[i-pQ->Front]=pQ->Elements[i];
+		pQ->Rear=Max-pQ->Front-1;
+		pQ->Front=0;
+	}
+	pQ->Rear+=1;
+	pQ->Elements[pQ->Rear]=x;
+}
+//void readQueue(int n, Queue *pQ){
+//	int x,i;
+//	pQ->Rear=n-1;
+//	pQ->Front=0;
+//	for(i=pQ->Front;i<n;i++){
+//		scanf("%d",&x);
+//		pQ->Elements[i]=x;
+//	}
+//}
+int sl(Queue Q){
+	int n=0,i;
+	for(i=Q.Front;i<Q.Rear;i++)
+		n++;
+	return n;
+}
+//void printQueue(Queue Q){
+//	int i;
+//	for(i=Q.Front;i<Q.Rear;i++)
+//		printf("%d ",Q.Elements[i]);
+//}
+//int dem(int n, Queue Q1, Queue Q2){
+//	int i,j,count=0;
+//	for(i=Q1.Front;i<Q1.Rear+1;i++){
+//		for(j=Q2.Front;j<Q2.Rear+1;j++){
+//			if(Q1.Elements[i]==Q2.Elements[j]){
+//				count++;
+//				deQueue(&Q1);
+//				deQueue(&Q2);
+//				break;
+//			}
+//			else{
+//				count++;
+//				int tt=Q1.Elements[i];
+//				deQueue(&Q1);
+//				enQueue(tt,&Q1);
+//				break;
+//			}
+//		}		
+//	}	
+//	return count;
+//}
+void xuli(int n, Queue Q){
+	int i=0,x;
+	char c;
+	Q.Front=-1;
+	Q.Rear=-1;
+	while(i<n){
+		//fflush(stdin);
+		scanf("\n%c",&c);
+		if(c=='D'){
+			int tt1=Q.Elements[Q.Front+1];
+			if(sl(Q)==0)
+				tt1=-1;
+			deQueue(&Q);
+			int tt2=sl(Q);
+			printf("%d %d\n",tt1,tt2);
+		}
+		else if(c=='E'){
+			scanf("%d",&x);
+			enQueue(x,&Q);
+			int tt3=sl(Q);
+			printf("%d\n",tt3);
+		}
+		i++;
+	}
+}
+int main(){
+	int n;
+	scanf("%d",&n);
+	Queue Q;
+	xuli(n,Q);
+}

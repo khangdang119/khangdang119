@@ -1,0 +1,156 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node{
+	int Element;
+	struct Node *Next;	
+};
+typedef struct Node* Position; 
+typedef Position List;
+void makenullList(List *pL){
+	(*pL)=(struct Node*)malloc(sizeof(struct Node));
+	(*pL)->Next= NULL;
+}
+int isEmpty(List L){
+	return L->Next==NULL;
+}
+void insertList(int x, Position P, List *pL){
+	Position T;
+	T=(struct Node*)malloc(sizeof(struct Node));
+	T->Element=x;
+	T->Next=P->Next;
+	P->Next=T;
+}
+void deleteList(Position P, List *pL){
+	Position Temp;
+	if (P->Next!=NULL){
+		Temp=P->Next;
+		P->Next=Temp->Next;
+	}
+	free(Temp);
+}
+void append(int x,List *pL){
+	Position P=*pL;
+	while(P->Next!=NULL){
+		P=P->Next;
+	}
+	insertList(x,P,pL);
+}
+Position locate(int X, List L){
+	Position P;
+	P = L;
+	while (P->Next!= NULL){
+		if (P->Next->Element == X)
+			return P;
+		else 
+			P = P->Next;
+	}
+	return P; 
+}
+int member(int x,List L){
+	Position P=L;
+	while(P->Next!=NULL){
+		if(P->Next->Element==x)
+			return 1;
+	}
+	return 0;
+}
+void erase(int x, List *pL){
+	Position T=locate(x,*pL);
+	if(T->Next!=NULL)
+		deleteList(T,pL);
+	else 	
+		printf("Not found %d\n",x);
+}
+	
+	
+List unionSet(List L1,List L2){
+	List L;
+	L=L1;
+	while(L2->Next!=NULL){
+		if(member(L2->Next->Element,L)==0)
+			append(L2->Next->Element,&L);
+		L2=L2->Next;
+	}
+	return L;
+}
+List readSet(){
+	List L;
+	makenullList(&L);
+	int n,x,i;
+	scanf("%d",&n);
+	for(i=0;i<n;i++){
+		scanf("%d",&x);
+		if(member(x,L)==0)
+			append(x,&L);//addFirst(x,&L);
+	}
+	return L;
+}
+void printList(List L){
+	Position P=L;
+	while(P->Next!=NULL){
+		printf("%d ",P->Next->Element);
+		P=P->Next;
+	}
+}
+void printEvenNumbers(List L){
+	Position P=L;
+	while(P->Next!=NULL){
+		if(P->Next->Element%2==0)
+			printf("%d ",P->Next->Element);
+		P=P->Next;
+	}
+}
+float getAvg(List L){
+	if(L->Next==NULL)
+        return -10000.0;
+	Position P=L;
+	float sum=0;
+	int n=0;
+	while(P->Next!=NULL){
+		sum=sum+P->Next->Element;
+		n++;
+		P=P->Next;
+	}
+	return sum/(float)n;
+}
+
+
+
+
+int main(){	
+	List L;
+Position p,q;	
+L=(struct Node*)malloc(sizeof(struct Node));	
+L->Next=NULL;
+
+p=L;
+q=(struct Node*)malloc(sizeof(struct Node));	
+q->Element=5;
+q->Next=NULL;
+p->Next = q;
+	
+p=L;
+
+q=(struct Node*)malloc(sizeof(struct Node));	
+q->Element=500;
+q->Next=p->Next;
+p->Next = q;
+		
+erase(5000,&L);
+p=L;
+while(p->Next!=NULL)
+{
+	printf("%d ",p->Next->Element);
+	p=p->Next;
+}
+}
+
+
+
+
+
+
+
+
+
+

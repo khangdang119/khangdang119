@@ -1,0 +1,229 @@
+						//CAC PHEP TOAN DANH SACH DAC
+#include<stdio.h>
+#define MaxLength 80
+typedef struct{
+	int Elements[MaxLength];
+	int Last;
+}List; 					
+struct SinhVien{
+   char MSSV[10];
+   char HoTen[50];
+   float DLT, DiemTH1, DiemTH2;
+};
+void makenullList(List *p){						//khoi tao ds rong
+	p->Last=0;
+}
+void insertSet(int x,List *p){					//chen vao cuoi ds
+	p->Last+=1;
+	p->Elements[p->Last-1]=x;
+}
+void insertList(int x,int p, List *pL){			//chen vao vi tri bat ki
+	/*
+	if(pL->Last==MaxLength)
+		printf("Full");
+	else if(p<1 || p>pL->Last)
+		printf("Position Error");
+	*/
+	int i;
+	for(i=pL->Last;i>p;i--)
+		pL->Elements[i]=pL->Elements[i-1];
+	pL->Last+=1;
+	pL->Elements[p-1]=x;
+}
+int member(int x,List p){						//kiem tra ton tai phan tu x
+	int i;
+	for(i=0;i<p.Last;i++)
+		if(p.Elements[i]==x)	
+			return 1;
+	return 0;
+}
+void unionSet(List L1,List L2,List *L){			//ghep danh sach voi phan tu khong trung
+	int i;
+	L->Last=0;
+	for(i=0;i<L1.Last;i++)
+		insertSet(L1.Elements[i],L);
+	for(i=0;i<L2.Last;i++){
+		if(member(L2.Elements[i],*L)==0)
+			insertSet(L2.Elements[i],L);
+	}
+}
+void copyEvenNumbers(List L1,List *L){			//chep so chan
+	int i;
+	L->Last=0;
+	for(i=0;i<L1.Last;i++){
+		if(L1.Elements[i]%2==0){
+			insertList(L1.Elements[i],L->Last+1,L);
+		}			
+	}
+}
+int locate(int x,List L){						//tim vi tri xuat hien dau tien
+	int i;
+	for(i=0;i<L.Last;i++)
+		if(L.Elements[i]==x)
+			return i;
+	return 0;
+}
+void deleteList(int p,List *pL){					//xoa phan tu bat ki
+	int i;
+	for(i=p;i<pL->Last;i++)
+		pL->Elements[i]=pL->Elements[i+1];
+	pL->Last-=1;
+}
+void removeAll(int x,List *L){					//Xoa tat ca phan tu x
+	int i;
+	for(i=0;i<L->Last;i++){
+		if(L->Elements[i]==x){
+			deleteList(locate(x,*L),L);
+			i=0;
+		}
+	}
+}
+void readSet(List *L){							//Nhap ds
+	int n,i,x;
+	scanf("%d",&n);
+	makenullList(L);
+	for(i=0;i<n;i++){
+		scanf("%d",&x);
+		if(member(x,*L)==0)
+			insertSet(x,L);
+	}
+}
+void printList(List L){							//In ds
+	int i;
+	for(i=0;i<L.Last;i++)
+		printf("%d ",L.Elements[i]);
+}
+void intersection(List L1 , List L2, List *L){	//Giao cua 2 tap ds
+	int i,j;
+	L->Last=0;
+	for(i=0;i<L1.Last;i++){
+		for(j=0;j<L2.Last;j++){
+			if(L1.Elements[i]==L2.Elements[j] && member(L1.Elements[i],*L)==0){
+				insertSet(L1.Elements[i],L);
+			}
+		}
+	}
+}
+void bubblesort(List *L){
+	int i,j;
+	for(i=0;i<L->Last;i++){
+		for(j=L->Last-1;j>i;j--){
+			if(L->Elements[j]<L->Elements[j-1]){
+				int tt=L->Elements[j-1];
+				L->Elements[j-1]=L->Elements[j];
+				L->Elements[j]=tt;
+			}
+		}
+	}
+}
+void difference(List L1, List L2, List *pL){
+	makenullList(pL);
+	int i,j;
+	for(i=0;i<L1.Last;i++){
+		if(!member(L1.Elements[i],L2)){
+			insertSet(L1.Elements[i],pL);
+		}
+	}	
+}
+void normalize(List *pL){
+	int i=0,j;
+	while(i!=pL->Last){
+		j=i+1;
+		while(j!=pL->Last){
+			if(pL->Elements[i]==pL->Elements[j])
+				deleteList(j,pL);
+			else 
+				j++;
+		}
+		i++;
+	}
+}
+void erase(int x, List *pL){
+	deleteList(locate(x,*pL),pL);
+}
+float getAvg(List L){
+    if(L.Last==0)
+        return -10000;
+	int i;
+	float sum=0;
+	for(i=0;i<L.Last;i++){
+		sum+=L.Elements[i];
+	}
+	return (float)(sum/L.Last);
+}
+int main(){
+//	List L1,L2,L;							//Bai 1.1
+//	int i;
+//	makenullList(&L1);
+//	makenullList(&L2);
+//	for(i=0;i<=5;i++)
+//	    insertSet(2*i, &L1);
+//	for(i=10;i>=4;i--)
+//	    insertSet(2*i, &L2);
+//	for(i=0;i<L1.Last;i++)
+//	    printf("%d ",L1.Elements[i]);
+//	printf("\n");
+//	for(i=0;i<L2.Last;i++)
+//	    printf("%d ",L2.Elements[i]);
+//	printf("\n");
+//	unionSet(L1,L2,&L);
+//	for(i=0;i<L.Last;i++)
+//	    printf("%d ",L.Elements[i]);
+//	List L1,L2;								//Bai 1.2
+//	int i;
+//	makenullList(&L1);
+//	for(i=0;i<=5;i++){
+//	    insertList(i, L1.Last+1, &L1);
+//	}
+//	copyEvenNumbers(L1, &L2);
+//	for(i=0;i<L1.Last;i++){
+//	    printf("%d ",L1.Elements[i]);
+//	}
+//	printf("\n");
+//	for(i=0;i<L2.Last;i++){
+//	    printf("%d ",L2.Elements[i]);
+//	}
+//	List L;									//Bai 1.4
+//	int i;
+//	L.Last=0;
+//	for(i=0;i<5;i++)
+//		L.Elements[i] = 2*i;
+//	L.Last=5;
+//	removeAll(0,&L);
+//	for(i=0;i<L.Last;i++)
+//		printf("%d ",L.Elements[i]);
+//	List L;									//Bai 1.5
+//	int i;
+//	readSet(&L);
+//	for(i=0;i<L.Last;i++){
+//	    printf("%d ",L.Elements[i]);
+//	}
+//	List L;									//Bai 1.6
+//	int i;
+//	L.Last=0;
+//	for(i=0;i<5;i++)
+//	  {  L.Elements[i] = 2*i; }
+//	L.Last=5;
+//	printList(L);
+//	List L1,L2,L;							//Bai 1.8
+//	int i;
+//	makenullList(&L1);
+//	makenullList(&L2);
+//	for(i=0;i<=5;i++)
+//	    insertSet(2*i, &L1);
+//	for(i=4;i<=8;i++)
+//	    insertSet(2*i, &L2);
+//	for(i=0;i<L1.Last;i++)
+//	    printf("%d ",L1.Elements[i]);
+//	printf("\n");
+//	for(i=0;i<L2.Last;i++)
+//	    printf("%d ",L2.Elements[i]);
+//	printf("\n");
+//	intersection(L1,L2,&L);
+//	for(i=0;i<L.Last;i++)
+//	    printf("%d ",L.Elements[i]);
+List L;
+L.Last=0;
+printf("AVG = %.4f\n", getAvg(L));
+
+}

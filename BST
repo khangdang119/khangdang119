@@ -1,0 +1,280 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node{
+	int Element;
+	struct Node* left;
+	struct Node* right;
+};
+typedef struct Node* Tree;
+void makenulltree(Tree *pT){
+	(*pT)=NULL;
+}
+int isEmpty(Tree T){
+	return T==NULL?1:0;
+}
+Tree initTree(){
+	Tree T;
+	T=NULL;
+	return T;
+}
+Tree leftchild(Tree T){
+	if(T!=NULL)
+		return T->left;
+	else 
+		return NULL;
+}
+Tree rightchild(Tree T){
+	if(T!=NULL)
+		return T->right;
+	else 
+		return NULL;
+}
+Tree search(int x, Tree T){
+	if(T==NULL)
+		return NULL;
+	else if(x==T->Element)
+		return T;
+	else if(x<T->Element)
+		return search(x,T->left);
+	else 
+		return search(x,T->right);
+}
+void printPath(int x, Tree T){
+	if(T!=NULL)
+		printf("%d ",T->Element);
+	if(T==NULL)
+		printf("-> Khong thay");
+	else if(x==T->Element)
+		printf("-> Tim thay");
+	else if(x<T->Element)
+		printPath(x,T->left);
+	else
+		printPath(x,T->right);
+}
+void tientu(Tree T){
+	printf("%d ",T->Element);
+	if(leftchild(T)!=NULL)
+		tientu(leftchild(T));
+	if(rightchild(T)!=NULL)	
+		tientu(rightchild(T));
+}
+void trungtu(Tree T){
+	if(leftchild(T)!=NULL)
+		trungtu(leftchild(T));
+	printf("%d ",T->Element);	
+	if(rightchild(T)!=NULL)	
+		trungtu(rightchild(T));	
+}
+void hautu(Tree T){
+	if(leftchild(T)!=NULL)
+		hautu(leftchild(T));
+	if(rightchild(T)!=NULL)	
+		hautu(rightchild(T));
+	printf("%d ",T->Element);
+}
+int count(Tree T){
+	if(T==NULL)
+		return 0;
+	return 1+count(leftchild(T))+count(rightchild(T));
+}
+Tree anhemphai(int x, Tree T){					
+	if(T==NULL)
+		return NULL;
+	if(T->left!=NULL){
+		if(T->left->Element==x){
+			if(T->right!=NULL)
+				return T->right;
+			else
+				return NULL;
+		}
+	}
+	else if(x<T->Element)	
+		return anhemphai(x,T->left);
+	else 
+		return anhemphai(x,T->right);	
+}
+Tree rightSibling(int x, Tree T){
+	if(search(x,T)!=NULL)
+		return anhemphai(x,T);
+	return NULL;
+}
+void insertNode(int x, Tree *pT){
+	int flag=0;
+	if((*pT)==NULL){
+		(*pT)=(struct Node*)malloc(sizeof(struct Node));
+		(*pT)->Element=x;
+		(*pT)->left=NULL;
+		(*pT)->right=NULL;
+	}
+	else{
+		if((*pT)->Element==x)
+			flag=1;
+		if(flag==0){
+			if((*pT)->Element>x)
+				insertNode(x,&(*pT)->left);
+			else{
+				insertNode(x,&(*pT)->right);
+			}
+		}
+	}
+}
+int cuctrai(Tree *pT){
+	int x;
+	if((*pT)->left==NULL){
+		x=(*pT)->Element;
+		(*pT)=(*pT)->right;
+		return x;
+	}
+	else
+		return cuctrai(&(*pT)->left);
+}
+void deleteNode(int x, Tree *pT){
+	if((*pT)!=NULL){	
+		if(x<(*pT)->Element)
+			deleteNode(x,&(*pT)->left);
+		else if(x>(*pT)->Element)
+			deleteNode(x,&(*pT)->right);
+		else{				
+			if((*pT)->left==NULL && (*pT)->right==NULL)
+				(*pT)=NULL;
+			else{
+				if((*pT)->left==NULL)
+					(*pT)=(*pT)->right;
+				else if((*pT)->right==NULL)
+					(*pT)=(*pT)->left;
+				else
+					(*pT)->Element=cuctrai(&(*pT)->right);
+			}
+		}
+	}
+}
+int max(int a, int b){
+	return a>b?a:b;
+}
+int getHeight(Tree T){
+	if(T==NULL)
+		return -1;
+	return max(getHeight(T->left),getHeight(T->right))+1;
+}
+int getHeight_chaos(int x, Tree T){			// Mo rong them tham so x
+	if(T==NULL)
+		return -1;
+	return max(getHeight_chaos(x,T->left),getHeight_chaos(x,T->right))+1;
+}
+int hNode(int x, Tree T){
+	if(search(x,T)==NULL)
+		return -1;
+	else
+		return getHeight_chaos(x,search(x,T));
+}
+Tree getParent(int x, Tree T){
+	if(T->Element==x)
+		return NULL;
+	if(T->left->Element==x)
+		return T;
+	else if(T->right->Element==x)
+		return T;
+	else if(x<T->Element)
+		return getParent(x,T->left);
+	else 
+		return getParent(x,T->right);
+}
+Tree cucphaibenphai(Tree A, Tree T){
+	if(T->right!=NULL)
+		return cucphaibenphai(A,T->right);
+	else 
+		return T;
+}
+Tree cuctraibentrai(Tree A, Tree T){
+	if(T->left!=NULL)
+		return cuctraibentrai(A,T->left);
+	else 
+		return T;
+}
+Tree getNext(int x, Tree T){
+	Tree P=search(x,T);
+	if(P==NULL || P==cucphaibenphai(P,T))
+		return NULL;
+	else{
+		if(P->right!=NULL){
+			Tree Q=P->right;
+			while(Q->left!=NULL)
+				Q=Q->left;
+			return Q;
+		}
+		else{
+			int check=0;
+			Tree Q;
+			P=T;
+			while(P!=NULL && check==0){
+				if(x==P->Element)
+					check=1;
+				else if(x<P->Element){
+					Q=P;
+					P=P->left;
+				}
+				else
+					P=P->right;
+			}
+			return Q;
+		}
+	}
+}
+Tree getPrevious(int x, Tree T){
+	Tree P=search(x,T);
+	if(P==NULL || P==cuctraibentrai(P,T->left))
+		return NULL;
+	else{
+		if(P==T){
+			Tree Q=P->left;
+			while(Q->right!=NULL)
+				Q=Q->right;
+			return Q;
+		}
+		else if(P->left!=NULL)
+			return P->left;
+		else{
+			int check=0;
+			Tree Q;
+			P=T;
+			while(P!=NULL && check==0){
+				if(x==P->Element)	
+					check=1;
+				else if(x>P->Element){
+					Q=P;
+					P=P->right;
+				}
+				else 
+					P=P->left;
+			}
+			return Q;
+		}
+	}
+}
+int main(){
+Tree T=NULL;
+Tree p;
+int x;
+
+insertNode(27,&T);
+insertNode(12,&T);
+insertNode(40,&T);
+insertNode(4,&T);
+insertNode(20,&T);
+insertNode(34,&T);
+insertNode(30,&T); 
+insertNode(50,&T); 
+//insertNode(3,&T);
+//insertNode(2,&T);
+x=27;
+trungtu(T);
+printf("\n");
+p = getPrevious(x,T);
+if (p==NULL)
+   printf("%d khong co nut dung sau",x);
+else printf("Nut dung sau la %d",p->Element);
+}
+		
+
+
+

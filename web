@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Home</title>	
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="bai4.css">
+	</head>
+	<body>
+		<div class="header">
+			<h1>My website</h1>
+			<span id="not">Resize the browser window to see the effect</span>
+		</div>
+		<img src="./images/header_bt5.jpg" width="90%" height="250"/>
+		<form>
+		<div class="menu">
+			<a href="#" onclick="document.getElementById('register_modal').style.display='block'">Đăng ký</a>
+			<a href="#" onclick="document.getElementById('login_modal').style.display='block'">Đăng nhập</a>
+			<span>Link</span>
+		</div>
+		<div class="titleheading1">
+			<h2>TITLE HEADING</h2>
+			<span>Title description,  Dec 7, 2017</span></br>
+			<div class="icon hang1"></div>
+			<div class="icon hang2"></div>
+			<div class="icon hang3"></div>
+			<div class="text">Some text...#######################</div>
+		</div>
+		<div class="about">
+			<h2>ABOUT ME</h2>
+			<div class="img1">image</div>
+			<div class="text2">Some text...#######################</div>
+		</div>
+		<div class="titleheading2">
+			<h2>TITLE HEADING</h2>
+			<span>Title description,  Sep 2, 2017</span></br>
+			<div class="img2">image</div>
+			<div class="text2">Some text...#######################</div>
+		</div>
+		<div class="popular">
+			<h2>POPULAR POST</h2>
+			<div class="img3">image</div>
+			<div class="imgchong">image</div>
+			<div class="imgchong">image</div>
+		</div>
+		<div class="follow">
+			<h2>FOLLOW ME</h2>
+			<div class="text2">Some text</div>
+		</div>
+		<div class="footing">Copy right by me</div>
+		</form>
+		<!-- form dang nhap -->
+		<div id="login_modal" class="modal">
+			<span onclick="document.getElementById('login_modal').style.display='none'" class="close" title="CloseModal">&times;</span>
+			<img src="./images/img_avatar.png" width="150" height="150"/>
+			<form class="modal-content animate" onsubmit="return checkall(this)" action="#">
+				<div>Tài khoản</div>
+				<input type="text" id="ac" placeholder="Nhập tài khoản"></input>
+				<div>Mật khẩu</div>
+				<input type="password" id="pwd" placeholder="Nhập mật khẩu"></input></br>
+				<button type="submit" class="signin">Đăng nhập</button></br>
+				<input type="checkbox"></input>
+				<span>Nhớ đăng nhập</span></br>
+				<div class="bot">
+					<button class="cancel">Hủy</button>
+					<span id="forget">Quên<a href>Mật khẩu ?</a></span>
+				</div>
+			</form>
+		</div>
+		<!-- form dang ki -->
+		<div id="register_modal" class="modal">
+			<span onclick="document.getElementById('register_modal').style.display='none'" class="close" title="CloseModal">&times;</span>
+			<h1>ĐĂNG KÝ</h1>
+			<div>Vui lòng nhập thông tin để tạo mới tài khoản</div>
+			<form class="modal-content animate" onsubmit="return checkall2(this)" action="#">
+			<div>Email</div>
+			<input type="text" id="ac1" placeholder="Nhập Email"></input>
+			<div>Mật khẩu</div>
+			<input type="password" id="pwd1" placeholder="Nhập mật khẩu"></input>
+			<div>Nhập lại mật khẩu</div>
+			<input type="password" id="pwd2" placeholder="Nhập mật khẩu"></input>
+			<input type="checkbox" >Nhớ đăng nhập</input></br>
+			<div>Thông qua việc tạo tài khoản, bạn đã đồng ý với <a href="#">Điều khoản & Chính sách</a> của chúng tôi</div>
+			<button class="cancelx">Hủy</button>
+			<button type="submit" class="signup">Đăng ký</button>
+			</form>
+		</div>
+		<script>
+			function checkmail1(form){
+				var emailreg = /^[a-zA-Z0-9._-]+@[[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+				if(emailreg.test(form.ac.value)==false){
+					alert("Nhap lai");
+					return false;
+				}
+				return true;
+			}
+			function checkpass1(form){
+				var reg = new RegExp(".{8,}");
+				if(reg.test(form.pwd.value)==false){
+					alert("Nhap lai");
+					return false;
+				}
+				return true;
+			}
+			function checkmail2(form){
+				var emailreg = /^[a-zA-Z0-9._-]+@[[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+				if(emailreg.test(form.ac1.value)==false){
+					alert("Nhap lai");
+					return false;
+				}
+				return true;
+			}
+			function checkpass2(form){
+				var reg = new RegExp(".{8,}");
+				if(reg.test(form.pwd1.value)==false){
+					alert("Nhap lai");
+					return false;
+				}
+				else if(reg.test(form.pwd2.value)==false){
+					alert("Nhap lai");
+					return false;
+				}
+				else if(form.pwd1.value != form.pwd2.value){
+					alert("Nhap lai");
+					return false;
+				}
+				return true;
+			}
+			function checkall(form){
+				return checkmail1(form) && checkpass1(form);
+			}
+			function checkall2(form){
+				return checkmail2(form) && checkpass2(form);
+			}
+		</script>
+	</body>
+</html>
+
+------css------
+
+body{
+	background-color: grey;
+}
+img{
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+}
+.header{
+	display:block;
+	margin-top: auto;
+	margin-left: 40%;
+	position: absolute
+}
+h1{
+	color: white;
+	font-size: 50px;
+}
+.menu{
+	height: 50px;
+	margin-top: 10px;
+	background-color: black;
+}
+.menu a{
+	padding: 14px 16px;
+	color: white; 
+	text-decoration: none;
+}
+.menu span{
+	color: white;
+	margin-left: 95%;
+}
+.titleheading1 {
+	margin-top: 20px;
+	background-color: white;
+	width: 70%;
+	height: 350px;
+	color: black;
+	float: left;
+}
+h2{
+	padding-top: 20px;
+}
+.icon{
+	margin-top: 10px;
+	background-image: url('./images/social_icons_small.png');
+	height:60px;
+	width: 300px;
+}
+.hang1 {
+	background-position: 0px 0px;
+	float: left;
+}
+.hang2 {
+	background-position: 0px 148px;
+	float: left;
+}
+.hang3 {
+	background-position: 200px 185px;
+	float: left;
+}
+.text{
+	padding-top: 70px;
+	float:none;
+}
+.about{
+	margin-top: 20px;
+	margin-left: 20px;
+	background-color: white;
+	float: left;
+	width: 28%;
+	height: 350px;
+}
+.img1{
+	margin: 20px 10px 10px 20px;
+	width: 90%;
+	height: 100px;
+	background-color: #a28686;
+}
+.text2{
+	padding-top: 10px;
+	float:none;
+}
+.titleheading2 {
+	margin-top: 20px;
+	width: 70%;
+	height: 550px;
+	background-color: white;
+	color: black;
+	float: left;
+}
+.img2{
+	margin: 20px 10px 10px 20px;
+	width: 95%;
+	height: 300px;
+	background-color: #a28686;
+}
+.popular{
+	margin-top: 20px;
+	margin-left: 20px;
+	background-color: white;
+	float: left;
+	width: 28%;
+	height: 400px;			
+}
+.img3{
+	margin: 20px 10px 0px 20px;
+	width: 90%;
+	height: 100px;
+	background-color: #a28686;
+}
+.imgchong{
+	margin: 0px 10px 0px 20px;
+	width: 90%;
+	height: 100px;
+	background-color: #a28686;
+}
+.follow{
+	margin-top: 20px;
+	margin-left: 20px;
+	background-color: white;
+	float: left;
+	width: 28%;
+	height: 200px;		
+}
+.footing{
+	margin: 20px 10px 20px 10px;
+	background-color: #a28686;
+	width: 98%;
+	height: 100px;
+	float: left;
+	text-align: center;
+}
+/* form dang nhap */
+div img{
+	border-radius: 100px;
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+}
+div form div{
+	font-weight:bold;
+}
+input[type="text"], input[type="password"]{
+	width: 100%;
+	height:25px;
+	margin-bottom:5px;
+	border:1px solid #DCDCDC;
+	box-sizing:border-box;
+}
+.signin{
+	background-color: lightgreen;
+	border:0px;
+	width: 100%;
+	height:30px;
+	color:white;
+}
+input{
+	padding-top:5px;
+	width:15px;
+}
+.bot{
+	background-color: #f7eded;
+	width: 100%;
+	height: 70px; 
+	margin-top:10px;
+}
+.cancel{
+	background-color: red;
+	width:50px;
+	height:30px;
+	border:0px;
+	color:white;
+	margin-top:15px;
+	margin-left:15px;
+}
+#forget{
+	margin-top:15px;
+	float:right;
+	font-weight:lighter;
+}
+/* form dang ki */
+.register_modal form input, .register_modal form div{
+	margin-bottom: 20px;
+}
+.cancelx{
+	background-color: red;
+	border:0px;
+	width: 50%;
+	height:35px;
+	color:white;
+	float: left;
+}
+.signup{
+	background-color: green;
+	border:0px;
+	width: 50%;
+	height:35px;
+	color:white;
+}
+
+/* modal */
+.modal {
+	display: none; /* Mặc định là ẩn */
+	position: fixed; /* Vẫn giữ vị trí hiển thị */
+	z-index: 1; /* nằm ở phía trên */
+	left: 0;
+	top: 0;
+	width: 100%; /* Đặt độ rộng là 100% */
+	height: 100%; /* Đặt chiều cao 100% */
+	overflow: auto; /* Hiển thị thanh cuộn nếu cần */
+	background-color: red; /* Màu nền */
+	background-color: rgba(0,0,0,0.4); /* Màu đen có độ trong*/
+	padding-top: 60px;
+}
+/* Nội dung phần modal */
+.modal-content {
+	background-color: #fefefe;
+	margin: 5px auto; /* Vị trí cách cạnh trên 15% và canh
+	giữa*/
+	border: 1px solid #888;
+	width: 80%; /* Có thể hẹp hơn tùy vào kích thước màn hình */
+}
+/* Nút đóng */
+.close {
+	/* Vị trí ở phía góc trên bên phải của modal */
+	position: absolute;
+	right: 25px;
+	top: 0;
+	color: #000;
+	font-size: 35px;
+	font-weight: bold;
+}
+	/* Nút đóng khi rê chuột lên */
+.close:hover, .close:focus {
+	color: red;
+	cursor: pointer;
+}
+	/* Thêm vào hiệu ứng phóng to/thu nhỏ */
+.animate {
+	-webkit-animation: animatezoom 0.6s;
+	animation: animatezoom 0.6s
+}
+@-webkit-keyframes animatezoom {
+	from {-webkit-transform: scale(0)}
+	to {-webkit-transform: scale(1)}
+}
+@keyframes animatezoom {
+	from {transform: scale(0)}
+	to {transform: scale(1)}
+}
+@media screen and (max-width: 800px) {
+	.titleheading1, .titleheading2, .about, .popular, .follow {
+		width:100%;
+		float: none;
+		margin: 0px;
+	}
+	.text{
+		margin-top: 140px;
+	}
+}
